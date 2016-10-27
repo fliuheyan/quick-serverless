@@ -1,0 +1,41 @@
+{
+  "name": "aws-serverless-express-example",
+  "version": "1.1.0",
+  "description": "Example application for running a Node Express app on AWS Lambda using Amazon API Gateway.",
+  "main": "lambda.js",
+  "config": {
+    "s3BucketName": "YOUR_UNIQUE_BUCKET_NAME",
+    "cloudFormationStackName": "AwsServerlessExpressStack",
+    "region": "YOUR_AWS_REGION"
+  },
+  "scripts": {
+    "config": "node configure.js",
+    "local": "node -e \"require('./lambda.js').handler(require('./local/api-gateway-event.json'), {succeed: v => { console.log(v); process.exit(0); }}, (e, v) => { console.log(v); process.exit(1); })\"",
+    "invoke-lambda": "aws lambda invoke --function-name AwsServerlessExpressFunction --region $npm_package_config_region --payload file://api-gateway-event.json lambda-invoke-response.json && cat lambda-invoke-response.json",
+    "create-bucket": "aws s3 mb s3://$npm_package_config_s3BucketName --region $npm_package_config_region",
+    "delete-bucket": "aws s3 rm s3://$npm_package_config_s3BucketName/lambda-function.zip --region $npm_package_config_region; aws s3 rm s3://$npm_package_config_s3BucketName/simple-proxy-api.yaml --region $npm_package_config_region; aws s3 rb s3://$npm_package_config_s3BucketName --region $npm_package_config_region",
+    "upload-api-gateway-swagger": "aws s3 cp ./simple-proxy-api.yaml s3://$npm_package_config_s3BucketName --region $npm_package_config_region",
+    "create-stack": "aws cloudformation create-stack --stack-name $npm_package_config_cloudFormationStackName --template-body file://./cloudformation.json --capabilities CAPABILITY_IAM --parameters ParameterKey=AwsServerlessExpressS3Bucket,ParameterValue=$npm_package_config_s3BucketName --region $npm_package_config_region",
+    "update-stack": "aws cloudformation update-stack --stack-name $npm_package_config_cloudFormationStackName --template-body file://./cloudformation.json --capabilities CAPABILITY_IAM --parameters ParameterKey=AwsServerlessExpressS3Bucket,ParameterValue=$npm_package_config_s3BucketName --region $npm_package_config_region",
+    "delete-stack": "aws cloudformation delete-stack --stack-name $npm_package_config_cloudFormationStackName --region $npm_package_config_region",
+    "package-function": "zip -q -r lambda-function.zip lambda.js app node_modules",
+    "upload-function": "aws s3 cp ./lambda-function.zip s3://$npm_package_config_s3BucketName --region $npm_package_config_region",
+    "update-function": "aws lambda update-function-code --function-name AwsServerlessExpressFunction --region $npm_package_config_region --zip-file fileb://lambda-function.zip",
+    "package-upload-function": "npm run package-function && npm run upload-function",
+    "upload-update-function": "npm run upload-function && npm run update-function",
+    "package-upload-update-function": "npm run package-upload-function && npm run update-function",
+    "setup": "npm install && (aws s3api get-bucket-location --bucket $npm_package_config_s3BucketName --region $npm_package_config_region || npm run create-bucket) && npm run package-upload-function && npm run upload-api-gateway-swagger && npm run create-stack"
+},
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aws-serverless-express": "^1.1.4",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+		"sequelize": "^3.24.4"
+  },
+	"devDependencies": {
+		"sequelize-cli": "^2.4.0",
+		"mocha": "^3.1.2"	
+	}
+}

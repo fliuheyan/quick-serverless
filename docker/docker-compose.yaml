@@ -1,0 +1,14 @@
+version: "2"
+services:
+  app:
+    image:
+    environment:
+    volumes:
+    working_dir:
+    ports:
+    command:
+  db:
+    image:
+    volumes:
+
+volumes:

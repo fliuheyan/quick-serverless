@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.DS_Store
+example/lambda-function.zip
+example/lambda-invoke-response.json
+.idea/*
+.idea/aws-serverless-express.iml
