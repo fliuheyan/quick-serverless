@@ -3,7 +3,7 @@ version: "2"
 services:
   web:
     links:
-      - db
+      - db:db
     build:
       context: ./docker
       dockerfile: base-app-image.yml
@@ -20,8 +20,8 @@ services:
       - "3000:3000"
     command: node vanilla-server.js
   db:
-    build:
-      context: ./docker
-      dockerfile: base-db-image.yml
+    image: fliuheyan/mysql-5.6
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    ports:
+      - "3306:3306"

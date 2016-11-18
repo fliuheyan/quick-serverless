@@ -1,3 +1,3 @@
-# A simple aws lambda  based on aws-serverless-express
+# Quick serverless
 
 ## API Gateway + Lambda + RDS
