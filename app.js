@@ -4,6 +4,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const app = express()
+const db = require('./models')
+
+const getUser = (uid) => {
+  db.User.findOne({where: {id: uid}})
+}
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -38,7 +43,7 @@ app.post('/users', (req, res) => {
 app.put('/users/:userId', (req, res) => {
     const user = getUser(req.params.userId)
 
-    if (!user) return res.status(404).json({})
+    if (!user) return res.status(404).json({message: "can not get user from db"})
 
     user.name = req.body.name
     res.json(user)
@@ -53,7 +58,6 @@ app.delete('/users/:userId', (req, res) => {
     res.json(users)
 })
 
-const getUser = (userId) => users.find(u => u.id === parseInt(userId))
 const getUserIndex = (userId) => users.findIndex(u => u.id === parseInt(userId))
 
 // Ephemeral in-memory data store

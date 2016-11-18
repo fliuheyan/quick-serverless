@@ -25,17 +25,18 @@
     "upload-update-function": "npm run upload-function && npm run update-function",
     "package-upload-update-function": "npm run package-upload-function && npm run update-function",
     "setup": "npm install && (aws s3api get-bucket-location --bucket $npm_package_config_s3BucketName --region $npm_package_config_region || npm run create-bucket) && npm run package-upload-function && npm run upload-api-gateway-swagger && npm run create-stack"
-},
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "aws-serverless-express": "^1.1.4",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
-		"sequelize": "^3.24.4"
+    "mysql": "^2.12.0",
+    "sequelize": "^3.24.4"
   },
-	"devDependencies": {
-		"sequelize-cli": "^2.4.0",
-		"mocha": "^3.1.2"	
-	}
+  "devDependencies": {
+    "sequelize-cli": "^2.4.0",
+    "mocha": "^3.1.2"
+  }
 }

@@ -2,7 +2,8 @@ FROM node:4.3
 RUN npm install yarn -g
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 RUN pip install awscli
-RUN apt-get update
+RUN apt-get update -y
+RUN apt-get install vim
 RUN apt-get install jq -y
 RUN apt-get install zip -y
 ENV PATH "$PATH:/app/node_modules/.bin/"
