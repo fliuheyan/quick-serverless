@@ -1,0 +1,9 @@
+FROM mysql:5.6
+ENV MYSQL_ALLOW_EMPTY_PASSWORD true
+RUN apt-get update -y
+RUN mkdir -p /docker-entrypoint-initdb.d
+RUN mkdir -p /app
+WORKDIR /app
+COPY init-db.sql /app
+COPY init-db.sh /docker-entrypoint-initdb.d 
+RUN cat /docker-entrypoint-initdb.d/init-db.sh

@@ -1,0 +1,12 @@
+FROM node:4.3
+RUN npm install yarn -g
+RUN curl https://bootstrap.pypa.io/get-pip.py | python
+RUN pip install awscli
+RUN apt-get update
+RUN apt-get install jq -y
+RUN apt-get install zip -y
+ENV PATH "$PATH:/app/node_modules/.bin/"
+WORKDIR /usr/local/bin/
+RUN wget https://github.com/realestate-com-au/shush/releases/download/v1.3.0/shush_linux_amd64 -O shush
+RUN chmod +x shush
+
