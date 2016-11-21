@@ -21,7 +21,7 @@
 				"FunctionName": {
 						"Type": "String",
 						"Description": "Function name",
-						"Default": "MyFunction"						
+						"Default": "MyFunction"
 				},
 				"MigrationFunction": {
 						"Type": "String",

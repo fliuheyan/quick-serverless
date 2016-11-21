@@ -1,0 +1,5 @@
+FROM node:4.3
+RUN npm install yarn -g
+ENV PATH "$PATH:/app/node_modules/.bin/"
+RUN wget https://github.com/realestate-com-au/shush/releases/download/v1.3.0/shush_linux_amd64 -O shush
+RUN chmod +x shush
