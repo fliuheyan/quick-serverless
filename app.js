@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const app = express()
-const db = require('./models')
+const db = require('./db/models')
 
 const getUser = (uid) => {
   db.User.findOne({where: {id: uid}})
