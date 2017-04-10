@@ -20,13 +20,11 @@
         },
 				"FunctionName": {
 						"Type": "String",
-						"Description": "Function name",
-						"Default": "MyFunction"
+						"Description": "Function name"
 				},
 				"MigrationFunction": {
 						"Type": "String",
-						"Description": "Migration function name",
-						"Default": "MigrateFunction"
+						"Description": "Migration function name"
 				},
 				"MigrationFunctionS3Key": {
             "Type": "String",
