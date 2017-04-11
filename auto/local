@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $(dirname $0)/..
+
+docker volume create --name db-cache > /dev/null
+
+docker volume create --name node-cache > /dev/null
+
+docker-compose run --rm app sh -c 'yarn'
+
+docker-compose run --service-ports --rm app

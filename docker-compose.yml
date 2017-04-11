@@ -1,11 +1,11 @@
 version: "2"
 
 services:
-  web:
+  app:
     links:
-      - db:db
+      - db
     build:
-      context: ./docker
+      context: ./base-image
       dockerfile: base-app-image.yml
     environment:
       - NODE_ENV=development
@@ -15,6 +15,7 @@ services:
       - DB_PORT
     volumes:
       - .:/app
+      - node-cache:/app/node_modules
     working_dir: /app
     ports:
       - "3000:3000"
@@ -25,3 +26,11 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     ports:
       - "3306:3306"
+    volumes:
+      - db-cache:/var/lib/mysql
+
+volumes:
+  db-cache:
+    external: true
+  node-cache:
+    external: true
